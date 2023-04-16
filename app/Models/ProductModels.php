@@ -8,5 +8,5 @@ class ProductModels extends Model {
    protected $table = 'product';
    protected $primaryKey = "id";
    protected $allowedFields = ["nama","title","gambar"];
+   protected $cleanValidationRules = true;
 }
-?>

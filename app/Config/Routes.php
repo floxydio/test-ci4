@@ -29,13 +29,17 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->get("/product", "ProductController::index");
-$routes->post("/product", "ProductController::insertData");
-$routes->get("/product/(:num)", "ProductController::getProductById/$1");
-$routes->get("/product/name/(:alpha)", "ProductController::getProductByName/$1");
-$routes->put("/product/(:num)", "ProductController::editProductById/$1");
-$routes->delete("/product/(:num)", "ProductController::deleteProductById/$1");
+$routes->get('/home', 'Home::index');
+$routes->get("/test", "TestController::index");
+$routes->post("/insert-test", "TestController::insertData");
+$routes->post("/update-test/(:num)", "TestController::updateData/$1");
+$routes->get("/profile", "ProfileController::getDataFromRawQuery");
+// $routes->get("/product", "ProductController::index");
+// $routes->post("/product", "ProductController::insertData");
+// $routes->get("/product/(:num)", "ProductController::getProductById/$1");
+// $routes->get("/product/name/(:alpha)", "ProductController::getProductByName/$1");
+// $routes->put("/product/(:num)", "ProductController::editProductById/$1");
+// $routes->delete("/product/(:num)", "ProductController::deleteProductById/$1");
 /*
  * --------------------------------------------------------------------
  * Additional Routing

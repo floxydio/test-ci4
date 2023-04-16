@@ -7,6 +7,8 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\ProductModels;
 
 
+
+
 class ProductController extends ResourceController
 {
 
@@ -20,26 +22,49 @@ class ProductController extends ResourceController
 
    public function insertData()
    {
-      $model = new ProductModels();
-      $data = [
-         "nama" => $this->request->getVar("nama"),
-         "title" => $this->request->getVar("title"),
-         "gambar" => $this->request->getVar("gambar")
+      $rules = [
+         "nama" => "required",
+         "title" => "required",
+         "gambar" => "required",
       ];
-      $result = $model->save($data);
 
-      if ($result) {
+      $messages = [
+         "nama" => [
+            "required" => "Name is required"
+         ],
+         "title" => [
+            "required" => "Email required",
+         ],
+         "gambar" => [
+            "required" => "Phone Number is required"
+         ],
+      ];
+      if (!$this->validate($rules, $messages)) {
+
          $response = [
-            "status" => 201,
-            "message" => "Successfully Added"
+            'status' => 500,
+            'error' => true,
+            'message' => $this->validator->getErrors(),
+            'data' => []
+         ];
+         return $this->respond($response, 500);
+      } else {
+
+         $emp = new ProductModels();
+
+         $data['nama'] = $this->request->getVar("nama");
+         $data['title'] = $this->request->getVar("title");
+         $data['gambar'] = $this->request->getVar("gambar");
+
+         $emp->save($data);
+
+         $response = [
+            'status' => 200,
+            'error' => false,
+            'message' => 'Product added successfully',
+            'data' => []
          ];
          return $this->respondCreated($response);
-      } else {
-         $response = [
-            "status" => 400,
-            "message" => "Cannot Added"
-         ];
-         return $this->respond($response, 400);
       }
    }
 
